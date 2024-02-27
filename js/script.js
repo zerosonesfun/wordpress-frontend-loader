@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Check AJAX requests
   jQuery(document).on('ajaxSend', function(e, xhr, options) {
     // Assuming heartbeat data is sent as part of the URL or body, adjust as necessary
-    if (!options.data || (options.data && !options.data.includes('heartbeat'))) {
+    if (!options.data || (options.data && !options.data.includes('heartbeat') && !options.data.includes('pg-messaging'))) {
       showLoader();
     }
   }).on('ajaxComplete', function(e, xhr, options) {
