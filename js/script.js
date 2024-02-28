@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function showLoader() {
     loader.style.display = 'flex';
-    setTimeout(hideLoader, 5000); // Fallback to hide loader after 5 seconds
+    setTimeout(hideLoader, 3000); // Fallback to hide loader after 3 seconds just to ensure that no visitor ever has too poor of an experience due to an outlying/odd situation.
   }
 
   function hideLoader() {
@@ -18,10 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   window.addEventListener('load', hideLoader);
 
-  // Check AJAX requests
+  // Check AJAX requests using jQuery because WordPress loads jQuery by default so why not utilize it?
   jQuery(document).on('ajaxSend', function(e, xhr, options) {
-    // Assuming heartbeat data is sent as part of the URL or body, adjust as necessary
-    if (!options.data || (options.data && !options.data.includes('heartbeat') && !options.data.includes('pg-messaging'))) {
+    // Ignore WP hearbeat - that would cause the spinner to show every so many seconds/minutes.
+    if (!options.data || (options.data && !options.data.includes('heartbeat'))) {
       showLoader();
     }
   }).on('ajaxComplete', function(e, xhr, options) {
