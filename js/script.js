@@ -6,14 +6,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // When showing the loader, do it like this.
   
   function showLoader() {
-    loader.style.display = 'flex';
+    fe-loader.style.display = 'flex';
     setTimeout(hideLoader, 3000); // Fallback to hide loader after 3 seconds just to ensure that no visitor ever has too poor of an experience due to an outlying/odd situation.
   }
 
 // Do this to hide the loader.
   
   function hideLoader() {
-    loader.style.display = 'none';
+    fe-loader.style.display = 'none';
   }
 
 // For an app experience, show the loader on link clicks. One can change the selector. This would be a nice setting if a settings page is ever added.
