@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loader.style.display = 'none';
   }
 
-// For an app experience, show the loader on link clicks. Once can change the selector. This would be a nice setting if a settings page is ever added.
+// For an app experience, show the loader on link clicks. One can change the selector. This would be a nice setting if a settings page is ever added.
   
   document.querySelectorAll('a').forEach(function(link) {
     link.addEventListener('click', function(event) {
