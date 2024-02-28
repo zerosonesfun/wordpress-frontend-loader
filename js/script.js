@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Show loader when needed, but just in case get it outta here after 3 seconds
   function feshowLoader() {
     feloader.style.display = 'flex';
-    setTimeout(hideLoader, 3000);
+    setTimeout(fehideLoader, 3000);
   }
 // Hide loader when needed
   function fehideLoader() {
