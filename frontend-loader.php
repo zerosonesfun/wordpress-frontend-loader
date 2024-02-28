@@ -21,13 +21,13 @@ if ( ! function_exists( 'add_action' ) ) {
 
 // Prefix functions with "feload"
 function feload_custom_enqueue_scripts_and_styles() {
-    wp_enqueue_script( 'feload-script', plugin_dir_url( __FILE__ ) . 'js/script.js', array( 'jquery' ), '1.2', true );
-    wp_enqueue_style( 'feload-style', plugin_dir_url( __FILE__ ) . 'css/style.css', array(), '1.3' );
+    wp_enqueue_script( 'load-script', plugin_dir_url( __FILE__ ) . 'js/script.js', array( 'jquery' ), '1.2', true );
+    wp_enqueue_style( 'load-style', plugin_dir_url( __FILE__ ) . 'css/style.css', array(), '1.4' );
 }
 add_action( 'wp_enqueue_scripts', 'feload_custom_enqueue_scripts_and_styles' );
 
 function feload_add_custom_div() {
-    echo '<div class="loader-overlay"><div class="loader"></div>';
+    echo '<div class="fe-loader-overlay"><div class="fe-loader"></div>';
 }
 add_action( 'wp_footer', 'feload_add_custom_div' );
 ?>
