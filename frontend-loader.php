@@ -2,7 +2,7 @@
 /*
 Plugin Name: Frontend Loader
 Description: A minimal loading spinner for WordPress that just works from initial click to page load to ajax requests.
-Version: 1.0
+Version: 1.2
 Author: Billy Wilcosky
 Author URI: https://wilcosky.com/skywolf
 License: GPL v2 or later
