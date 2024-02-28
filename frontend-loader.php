@@ -27,7 +27,7 @@ function feload_custom_enqueue_scripts_and_styles() {
 add_action( 'wp_enqueue_scripts', 'feload_custom_enqueue_scripts_and_styles' );
 
 function feload_add_custom_div() {
-    echo '<div class="fe-loader-overlay"><div class="fe-loader"></div>';
+    echo '<div class="fe-loader-overlay"><div class="fe-loader"></div></div>';
 }
 add_action( 'wp_footer', 'feload_add_custom_div' );
 ?>
