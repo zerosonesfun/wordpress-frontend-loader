@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-  var loader = document.querySelector('.loader-overlay');
+  var loader = document.querySelector('.fe-loader-overlay');
 
   function showLoader() {
     loader.style.display = 'flex';
