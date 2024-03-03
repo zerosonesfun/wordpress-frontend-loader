@@ -13,6 +13,6 @@ Join jQrew: https://discord.com/invite/UuMRRFtqvB
 
 jQuery will start to become smaller starting with version 4.0. jQuery is an easy way to work with Ajax; this is why a chunk of jQuery is used. Many WordPress plugins use jQuery.
 
-## But, the spinner shows too much
+## But, the spinner shows too much!
 
 There are two sections at the beginning of the js file where you can add element selectors so that either click and/or Ajax related to those elements does not trigger the spinner.
