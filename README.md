@@ -8,6 +8,7 @@ This plugin is brought to you by: SkyWolf, Billy Wilcosky, and donators like you
 
 ## But, why jQuery?
 🄹🅀🅄🄴🅁🅈 🄵🄾🅁🄴🅅🄴🅁
+
 Join jQrew: https://discord.com/invite/UuMRRFtqvB
 
 jQuery will start to become smaller starting with version 4.0. jQuery is an easy way to work with Ajax; this is why a chunk of jQuery is used. Many WordPress plugins use jQuery.
