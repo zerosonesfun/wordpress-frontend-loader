@@ -18,3 +18,8 @@ jQuery will start to become smaller starting with version 4.0. jQuery is an easy
 ## But, the spinner shows too much!
 
 There are two sections at the beginning of the js file where you can add element selectors so that either clicks and/or Ajax related to those elements do not trigger the spinner.
+
+## To do
+- Add settings page so that the user can enter what to ignore there versus is directly within the JS file
+- Add other WordPress requirements such as the readme.txt
+- Adjust to ensure approval for WordPress repository
