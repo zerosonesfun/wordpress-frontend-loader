@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     var feloader = document.querySelector('.fe-loader-overlay');
 
-    // Lists of selectors to ignore for link clicks
+    // List of selectors to ignore for link clicks
     var ignoreClickSelectors = [
         '.wp_ulike_btn',
         // Add more selectors here as needed
