@@ -1,20 +1,29 @@
 document.addEventListener('DOMContentLoaded', function() {
     var feloader = document.querySelector('.fe-loader-overlay');
 
-    // List of selectors to ignore for link clicks
+    // Lists of selectors to ignore for link clicks
     var ignoreClickSelectors = [
+        '.cld-like-trigger',
         '.wp_ulike_btn',
         // Add more selectors here as needed
     ];
 
     // Specific elements to check for ignoring AJAX calls
     var ignoreAjaxSelectors = [
+        '#distractionFreeCheckbox',
+        '.bod-block-popup-overlay.active',
+        '.cld-like-trigger',
         '.wp_ulike_btn',
-        // Add more selectors here as needed
+        // Add a generic selector for ignoring WordPress heartbeat API calls
     ];
 
-    // Function to determine if AJAX should be ignored based on specific selectors
-    function shouldIgnoreAjax() {
+    // Function to determine if AJAX should be ignored based on specific selectors or heartbeat
+    function shouldIgnoreAjax(options) {
+        // Check if the AJAX request is for the WordPress heartbeat API
+        if (options.url.includes('admin-ajax.php') && options.data && options.data.indexOf('heartbeat') > -1) {
+            return true; // Ignore heartbeat requests
+        }
+
         return ignoreAjaxSelectors.some(selector => {
             let elem = document.querySelector(selector);
             if (selector === '#distractionFreeCheckbox') {
@@ -45,11 +54,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Adjusting AJAX behavior if jQuery is available
     if (window.jQuery) {
         jQuery(document).ajaxSend((e, xhr, options) => {
-            if (!shouldIgnoreAjax()) {
+            if (!shouldIgnoreAjax(options)) { // Pass options to check for heartbeat
                 console.log('Loader shown for AJAX request.');
                 feloader.style.display = 'flex';
             } else {
-                console.log('Loader ignored for AJAX request due to matching ignore selector.');
+                console.log('Loader ignored for AJAX request due to matching ignore selector or heartbeat check.');
             }
         }).ajaxComplete((e, xhr, options) => {
             feloader.style.display = 'none';
@@ -58,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
         console.warn("jQuery is not loaded, AJAX request handling for loader display is disabled.");
     }
 });
-
 
 //──╔═══╗────────────╔═══╗
 //─╔╣╔═╗║────────────║╔══╝
