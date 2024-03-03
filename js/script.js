@@ -3,17 +3,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Lists of selectors to ignore for link clicks
     var ignoreClickSelectors = [
-        '.cld-like-trigger',
         '.wp_ulike_btn',
         // Add more selectors here as needed
     ];
 
     // Specific elements to check for ignoring AJAX calls
     var ignoreAjaxSelectors = [
-        '#distractionFreeCheckbox',
-        '.bod-block-popup-overlay.active',
-        '.cld-like-trigger',
         '.wp_ulike_btn',
+        // Add more selectors here as needed
     ];
 
     // Function to determine if AJAX should be ignored based on specific selectors
