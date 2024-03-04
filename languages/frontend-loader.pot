@@ -1,0 +1,35 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Frontend Loader\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-04 14:12+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.6; wp-6.4.3\n"
+"X-Domain: frontend-loader"
+
+#. Description of the plugin
+msgid ""
+"A minimal loading spinner for WordPress that just works from initial click "
+"to page load to ajax requests."
+msgstr ""
+
+#. Author of the plugin
+msgid "Billy Wilcosky"
+msgstr ""
+
+#. Name of the plugin
+msgid "Frontend Loader"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://wilcosky.com/skywolf"
+msgstr ""
