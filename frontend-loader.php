@@ -113,16 +113,11 @@ function feload_settings_page_html() {
 
     if (isset($_GET['settings-updated'])) {
         global $wp_settings_errors;
-        $already_added = false;
         foreach ((array) $wp_settings_errors as $error) {
             if ($error['code'] == 'feload_message') {
                 $already_added = true;
                 break;
             }
-        }
-
-        if (!$already_added) {
-            add_settings_error('feload_messages', 'feload_message', 'Settings Saved', 'updated');
         }
     }
 
