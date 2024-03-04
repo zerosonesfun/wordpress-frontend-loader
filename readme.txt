@@ -29,8 +29,8 @@ jQuery simplifies working with Ajax and will become more lightweight starting wi
 
 == Screenshots ==
 
-1. 1
-2. 2
+1. Settings page
+2. The spinner
 
 == Changelog ==
 
