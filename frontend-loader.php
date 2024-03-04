@@ -23,9 +23,18 @@ if ( ! function_exists( 'add_action' ) ) {
 
 // Enqueue scripts and styles
 function feload_custom_enqueue_scripts_and_styles() {
-    $plugin_version = '1.3'; // Updated version number
-    wp_enqueue_script( 'load-script', plugin_dir_url( __FILE__ ) . 'js/script.js', array( 'jquery' ), $plugin_version, true );
-    wp_enqueue_style( 'load-style', plugin_dir_url( __FILE__ ) . 'css/style.css', array(), $plugin_version );
+    wp_enqueue_script( 'load-script', plugin_dir_url( __FILE__ ) . 'js/script.js', array( 'jquery' ), '1.4', true );
+    wp_enqueue_style( 'load-style', plugin_dir_url( __FILE__ ) . 'css/style.css', array(), '1.3' );
+
+    // Retrieve settings or set default values
+    $ignore_click_selectors = get_option('feload_ignore_click_selectors', '.cld-like-trigger, .wp_ulike_btn');
+    $ignore_ajax_selectors = get_option('feload_ignore_ajax_selectors', '#distractionFreeCheckbox, .bod-block-popup-overlay.active, .cld-like-trigger, .wp_ulike_btn');
+
+    // Localize the script with your array of settings
+    wp_localize_script( 'load-script', 'feloadSettings', array(
+        'ignoreClickSelectors' => $ignore_click_selectors,
+        'ignoreAjaxSelectors' => $ignore_ajax_selectors,
+    ));
 }
 add_action( 'wp_enqueue_scripts', 'feload_custom_enqueue_scripts_and_styles' );
 
