@@ -1,44 +1,76 @@
-<?php
-/*
-Plugin Name: Frontend Loader
-Description: A minimal loading spinner for WordPress that just works from initial click to page load to ajax requests.
-Version: 1.3
-Author: Billy Wilcosky
-Author URI: https://wilcosky.com/skywolf
-License: GPL v2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: frontend-loader
-Domain Path: /languages
-*/
+document.addEventListener('DOMContentLoaded', function() {
+    var feloader = document.querySelector('.fe-loader-overlay');
 
-// If accessed directly, exit
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
-}
+    // Use localized settings from WordPress
+    var ignoreClickSelectors = feloadSettings.ignoreClickSelectors.split(', ');
+    var ignoreAjaxSelectors = feloadSettings.ignoreAjaxSelectors.split(', ');
 
-// Secure plugin by checking for WP environment
-if ( ! function_exists( 'add_action' ) ) {
-    die( 'No script kiddies please!' );
-}
+    // Function to determine if AJAX should be ignored based on specific selectors, heartbeat, or type of data
+    function shouldIgnoreAjax(options) {
+        // Directly show spinner for FormData instances
+        if (options.data instanceof FormData) {
+            return false; // Do not ignore this AJAX request; show the spinner
+        }
 
-// Enqueue scripts and styles
-function feload_custom_enqueue_scripts_and_styles() {
-    $plugin_version = '1.3'; // Updated version number
-    wp_enqueue_script( 'load-script', plugin_dir_url( __FILE__ ) . 'js/script.js', array( 'jquery' ), $plugin_version, true );
-    wp_enqueue_style( 'load-style', plugin_dir_url( __FILE__ ) . 'css/style.css', array(), $plugin_version );
-}
-add_action( 'wp_enqueue_scripts', 'feload_custom_enqueue_scripts_and_styles' );
+        // Convert options.data to a string if possible, for safe use of indexOf
+        let dataAsString = '';
+        if (typeof options.data === 'string') {
+            dataAsString = options.data;
+        } else if (options.data && typeof options.data === 'object') {
+            // Attempt to convert object to query string if not FormData
+            try {
+                dataAsString = Object.keys(options.data).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(options.data[key])}`).join('&');
+            } catch (e) {
+                console.log('Could not convert AJAX data to string. Ignoring spinner for this request.');
+                return true; // Ignore this AJAX request due to conversion failure
+            }
+        }
 
-// Add custom div for the loader
-function feload_add_custom_div() {
-    // Note: Since the output here is static and safe, escaping is not required.
-    // Always use functions like esc_html() for dynamic content.
-    echo '<div class="fe-loader-overlay"><div class="fe-loader"></div></div>';
-}
-add_action( 'wp_footer', 'feload_add_custom_div' );
+        // Check if the AJAX request is for the WordPress heartbeat API
+        if (options.url.includes('admin-ajax.php') && dataAsString.includes('heartbeat')) {
+            return true; // Ignore heartbeat requests
+        }
 
-// Load plugin textdomain for internationalization
-function feload_load_textdomain() {
-    load_plugin_textdomain( 'frontend-loader', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-}
-add_action( 'plugins_loaded', 'feload_load_textdomain' );
+        return ignoreAjaxSelectors.some(selector => {
+            let elem = document.querySelector(selector);
+            if (selector === '#distractionFreeCheckbox') {
+                return elem !== null && elem.checked; // For checkbox, also check if it's checked
+            }
+            return elem !== null; // For other selectors, just check for presence
+        });
+    }
+
+    // Function to check if the event target matches any of the ignore selectors
+    function eventTargetMatchesSelector(event, selectors) {
+        return selectors.some(selector => event.target.matches(selector) || event.target.closest(selector));
+    }
+
+    // Adjusting link click behavior
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function(event) {
+            if (!eventTargetMatchesSelector(event, ignoreClickSelectors)) {
+                console.log('Loader shown for link click.');
+                feloader.style.display = 'flex';
+                setTimeout(() => { feloader.style.display = 'none'; }, 3000); // Hide loader after delay
+            } else {
+                console.log('Loader ignored for link click due to matching ignore selector.');
+            }
+        });
+    });
+
+    // Adjusting AJAX behavior if jQuery is available
+    if (window.jQuery) {
+        jQuery(document).ajaxSend((e, xhr, options) => {
+            if (!shouldIgnoreAjax(options)) {
+                console.log('Loader shown for AJAX request.');
+                feloader.style.display = 'flex';
+            } else {
+                console.log('Loader ignored for AJAX request due to matching ignore selector, heartbeat check, or non-standard data.');
+            }
+        }).ajaxComplete((e, xhr, options) => {
+            feloader.style.display = 'none';
+        });
+    } else {
+        console.warn("jQuery is not loaded, AJAX request handling for loader display is disabled.");
+    }
+});
