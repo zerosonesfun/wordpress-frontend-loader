@@ -2,7 +2,7 @@
 
 ![](https://github.com/zerosonesfun/wordpress-frontend-loader/blob/main/fel-icon.jpeg)
 
-A loading spinner for WordPress which senses ajax requests, link clicks, and page loads. This gives your WordPress powered website native app-like power.
+A loading spinner for WordPress which senses ajax requests, link clicks, and page loads. This gives your WordPress powered website native app-like power. It ignores the WordPress heartbeat because otherwise the spinner will pop up many times.
 
 This plugin is brought to you by: SkyWolf, Billy Wilcosky, and donators like you! If this plugin helps you please buy me a coffee or two: https://www.buymeacoffee.com/billyw
 
