@@ -8,7 +8,6 @@ This plugin is brought to you by: SkyWolf, Billy Wilcosky, and donators like you
 
 ## But, why jQuery?
 ![](https://github.com/zerosonesfun/wordpress-frontend-loader/blob/main/jQuery-Logo.png)
-
 jQuery will start to become smaller starting with version 4.0. jQuery is an easy way to work with Ajax; this is why a chunk of jQuery is used. Many WordPress plugins use jQuery; don't let people turn you off from it. It won't slow your site down especially if you implement the proper caching techniques.
 
 🄹🅀🅄🄴🅁🅈 🄵🄾🅁🄴🅅🄴🅁
