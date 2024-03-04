@@ -40,8 +40,6 @@ add_action( 'wp_enqueue_scripts', 'feload_custom_enqueue_scripts_and_styles' );
 
 // Add custom div for the loader
 function feload_add_custom_div() {
-    // Note: Since the output here is static and safe, escaping is not required.
-    // Always use functions like esc_html() for dynamic content.
     echo '<div class="fe-loader-overlay"><div class="fe-loader"></div></div>';
 }
 add_action( 'wp_footer', 'feload_add_custom_div' );
@@ -56,11 +54,9 @@ add_action( 'plugins_loaded', 'feload_load_textdomain' );
 // Register settings, section, and fields
 add_action('admin_init', 'feload_register_settings');
 function feload_register_settings() {
-    // Register a new setting for "feload_settings" page
     register_setting('feload_settings', 'feload_ignore_click_selectors');
     register_setting('feload_settings', 'feload_ignore_ajax_selectors');
 
-    // Register a new section in the "feload_settings" page
     add_settings_section(
         'feload_settings_section',
         'Frontend Loader Settings',
@@ -68,7 +64,6 @@ function feload_register_settings() {
         'feload_settings'
     );
 
-    // Register a new field in the "feload_settings_section" section, inside the "feload_settings" page
     add_settings_field(
         'feload_field_ignore_click_selectors',
         'Ignore Click Selectors',
@@ -86,16 +81,12 @@ function feload_register_settings() {
     );
 }
 
-// Section callback function
 function feload_settings_section_cb() {
-    echo '<p>Customize the selectors to ignore for link clicks and AJAX requests.</p>';
+    echo '<p>Customize the selectors to ignore specific link clicks and AJAX requests. Input multiple selectors comma separated. Example: .one, #two, .three</p>';
 }
 
-// Field callback functions
 function feload_field_ignore_click_selectors_cb() {
-    // Get the value of the setting we've registered with register_setting()
     $setting = get_option('feload_ignore_click_selectors');
-    // Output the field
     echo "<input type='text' name='feload_ignore_click_selectors' value='" . esc_attr($setting) . "' style='width: 100%;'>";
 }
 
@@ -104,7 +95,6 @@ function feload_field_ignore_ajax_selectors_cb() {
     echo "<input type='text' name='feload_ignore_ajax_selectors' value='" . esc_attr($setting) . "' style='width: 100%;'>";
 }
 
-// Add the top level menu page
 add_action('admin_menu', 'feload_settings_page');
 function feload_settings_page() {
     add_options_page(
@@ -116,35 +106,34 @@ function feload_settings_page() {
     );
 }
 
-// Top level menu callback function
 function feload_settings_page_html() {
-    // check user capabilities
     if (!current_user_can('manage_options')) {
         return;
     }
 
-    // add error/update messages
-
-    // check if the user have submitted the settings
-    // WordPress will add the "settings-updated" $_GET parameter to the url
     if (isset($_GET['settings-updated'])) {
-        // add settings saved message with the class of "updated"
-        add_settings_error('feload_messages', 'feload_message', 'Settings Saved', 'updated');
+        global $wp_settings_errors;
+        $already_added = false;
+        foreach ((array) $wp_settings_errors as $error) {
+            if ($error['code'] == 'feload_message') {
+                $already_added = true;
+                break;
+            }
+        }
+
+        if (!$already_added) {
+            add_settings_error('feload_messages', 'feload_message', 'Settings Saved', 'updated');
+        }
     }
 
-    // show error/update messages
     settings_errors('feload_messages');
     ?>
     <div class="wrap">
         <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
         <form action="options.php" method="post">
             <?php
-            // output security fields for the registered setting "feload_settings"
             settings_fields('feload_settings');
-            // output setting sections and their fields
-            // (sections are registered for "feload_settings", each field is registered to a specific section)
             do_settings_sections('feload_settings');
-            // output save settings button
             submit_button('Save Settings');
             ?>
         </form>
