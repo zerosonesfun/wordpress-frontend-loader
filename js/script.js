@@ -14,13 +14,32 @@ document.addEventListener('DOMContentLoaded', function() {
         '.bod-block-popup-overlay.active',
         '.cld-like-trigger',
         '.wp_ulike_btn',
-        // Add a generic selector for ignoring WordPress heartbeat API calls
+        // You could add more selectors here as needed
     ];
 
-    // Function to determine if AJAX should be ignored based on specific selectors or heartbeat
+    // Function to determine if AJAX should be ignored based on specific selectors, heartbeat, or type of data
     function shouldIgnoreAjax(options) {
+        // Directly show spinner for FormData instances
+        if (options.data instanceof FormData) {
+            return false; // Do not ignore this AJAX request; show the spinner
+        }
+
+        // Convert options.data to a string if possible, for safe use of indexOf
+        let dataAsString = '';
+        if (typeof options.data === 'string') {
+            dataAsString = options.data;
+        } else if (options.data && typeof options.data === 'object') {
+            // Attempt to convert object to query string if not FormData
+            try {
+                dataAsString = Object.keys(options.data).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(options.data[key])}`).join('&');
+            } catch (e) {
+                console.log('Could not convert AJAX data to string. Ignoring spinner for this request.');
+                return true; // Ignore this AJAX request due to conversion failure
+            }
+        }
+
         // Check if the AJAX request is for the WordPress heartbeat API
-        if (options.url.includes('admin-ajax.php') && options.data && options.data.indexOf('heartbeat') > -1) {
+        if (options.url.includes('admin-ajax.php') && dataAsString.includes('heartbeat')) {
             return true; // Ignore heartbeat requests
         }
 
@@ -54,11 +73,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Adjusting AJAX behavior if jQuery is available
     if (window.jQuery) {
         jQuery(document).ajaxSend((e, xhr, options) => {
-            if (!shouldIgnoreAjax(options)) { // Pass options to check for heartbeat
+            if (!shouldIgnoreAjax(options)) {
                 console.log('Loader shown for AJAX request.');
                 feloader.style.display = 'flex';
             } else {
-                console.log('Loader ignored for AJAX request due to matching ignore selector or heartbeat check.');
+                console.log('Loader ignored for AJAX request due to matching ignore selector, heartbeat check, or non-standard data.');
             }
         }).ajaxComplete((e, xhr, options) => {
             feloader.style.display = 'none';
