@@ -1,6 +1,6 @@
 # WordPress Frontend Loader
 
-![](https://github.com/zerosonesfun/wordpress-frontend-loader/blob/main/fel-icon.jpeg)
+![](https://github.com/zerosonesfun/wordpress-frontend-loader/blob/main/assets/banner-1544x500.png)
 
 A loading spinner for WordPress which senses ajax requests, link clicks, and page loads. This gives your WordPress powered website native app-like power. It ignores the WordPress heartbeat because otherwise the spinner will pop up many times.
 
