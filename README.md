@@ -11,8 +11,6 @@ jQuery will start to become smaller starting with version 4.0. jQuery is an easy
 
 🄹🅀🅄🄴🅁🅈 🄵🄾🅁🄴🅅🄴🅁
 
-Join jQrew: https://discord.com/invite/UuMRRFtqvB
-
 ## Screenshots
 
 ![](https://github.com/zerosonesfun/wordpress-frontend-loader/blob/main/assets/screenshot-1.png)
